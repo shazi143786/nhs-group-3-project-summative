@@ -1,0 +1,9 @@
+SELECT
+    Patient.PatientName,
+    Appointment.AppointmentDate,
+    Appointment.AppointmentTime,
+    Appointment.Notes
+FROM Appointment
+JOIN Patient
+ON Appointment.PatientID = Patient.PatientID
+WHERE Appointment.AppointmentDate >= '2024-05-10';
