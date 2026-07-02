@@ -1,0 +1,177 @@
+DROP DATABASE IF EXISTS NHS_Database;
+CREATE DATABASE NHS_Database;
+USE NHS_Database;
+
+CREATE TABLE Patient (
+    PatientID INT AUTO_INCREMENT,
+    PatientName VARCHAR(100) NOT NULL,
+    Address VARCHAR(255) NOT NULL,
+    PRIMARY KEY (PatientID)
+);
+
+CREATE TABLE Clinic (
+    ClinicID INT AUTO_INCREMENT,
+    ClinicName VARCHAR(100) NOT NULL,
+    ClinicAddress VARCHAR(255) NOT NULL,
+    PRIMARY KEY (ClinicID)
+);
+
+CREATE TABLE Doctor (
+    DoctorID INT AUTO_INCREMENT,
+    DoctorName VARCHAR(100) NOT NULL,
+    Specialty VARCHAR(100) NOT NULL,
+    ClinicID INT NOT NULL,
+    PRIMARY KEY (DoctorID),
+    FOREIGN KEY (ClinicID) REFERENCES Clinic(ClinicID)
+);
+
+CREATE TABLE Appointment (
+    AppointmentID INT AUTO_INCREMENT,
+    PatientID INT NOT NULL,
+    DoctorID INT NOT NULL,
+    AppointmentDate DATE NOT NULL,
+    AppointmentTime TIME NOT NULL,
+    Notes VARCHAR(255),
+    PRIMARY KEY (AppointmentID),
+    FOREIGN KEY (PatientID) REFERENCES Patient(PatientID),
+    FOREIGN KEY (DoctorID) REFERENCES Doctor(DoctorID)
+);
+
+CREATE TABLE Medication (
+    MedicationID INT AUTO_INCREMENT,
+    MedicationName VARCHAR(100) NOT NULL,
+    PRIMARY KEY (MedicationID)
+);
+
+CREATE TABLE Prescription (
+    PrescriptionID INT AUTO_INCREMENT,
+    AppointmentID INT NOT NULL,
+    MedicationID INT NOT NULL,
+    PRIMARY KEY (PrescriptionID),
+    FOREIGN KEY (AppointmentID) REFERENCES Appointment(AppointmentID),
+    FOREIGN KEY (MedicationID) REFERENCES Medication(MedicationID)
+);
+USE NHS_Database;
+
+INSERT INTO Patient (PatientName, Address)
+VALUES
+('John Smith','123 Hill Rd'),
+('Mary Jones','456 Lake Ave'),
+('Ali Khan','12 Green Road'),
+('Sarah Ahmed','78 King Street'),
+('James Brown','90 Oxford Road'),
+('Emma Wilson','11 Church Lane'),
+('David Taylor','44 Queen Street'),
+('Sophia White','66 Park Road'),
+('Michael Green','21 London Road'),
+('Olivia Hall','99 Bridge Street');
+
+INSERT INTO Clinic (ClinicName, ClinicAddress)
+VALUES
+('Clinic A','10 Main Street'),
+('Clinic B','22 River Road'),
+('Clinic C','55 London Road'),
+('Clinic D','77 High Street'),
+('Clinic E','90 Queen Street'),
+('Clinic F','18 Green Lane'),
+('Clinic G','120 King Road'),
+('Clinic H','25 Oxford Street'),
+('Clinic I','66 Station Road'),
+('Clinic J','14 Park Avenue');
+
+INSERT INTO Doctor (DoctorName, Specialty, ClinicID)
+VALUES
+('Dr Adams','Cardiology',1),
+('Dr Brown','General Practice',2),
+('Dr Smith','Neurology',3),
+('Dr Wilson','Dermatology',4),
+('Dr Clark','Pediatrics',5),
+('Dr Lewis','Orthopedics',6),
+('Dr Walker','Oncology',7),
+('Dr Young','ENT',8),
+('Dr King','Radiology',9),
+('Dr Scott','Psychiatry',10);
+
+INSERT INTO Medication (MedicationName)
+VALUES
+('Aspirin'),
+('Beta Blocker'),
+('Paracetamol'),
+('Ibuprofen'),
+('Amoxicillin'),
+('Metformin'),
+('Atorvastatin'),
+('Omeprazole'),
+('Salbutamol'),
+('Cetirizine');
+
+INSERT INTO Appointment (PatientID, DoctorID, AppointmentDate, AppointmentTime, Notes)
+VALUES
+(1,1,'2024-05-01','10:00:00','Follow-up in 2 weeks'),
+(2,2,'2024-05-03','09:00:00','First visit'),
+(3,3,'2024-05-05','11:00:00','Headache check'),
+(4,4,'2024-05-07','12:00:00','Skin allergy'),
+(5,5,'2024-05-09','14:00:00','Child check-up'),
+(6,6,'2024-05-11','15:00:00','Knee pain'),
+(7,7,'2024-05-13','16:00:00','Cancer review'),
+(8,8,'2024-05-15','10:30:00','Ear pain'),
+(9,9,'2024-05-17','13:30:00','X-ray review'),
+(10,10,'2024-05-19','09:30:00','Mental health review');
+
+INSERT INTO Prescription (AppointmentID, MedicationID)
+VALUES
+(1,1),
+(1,2),
+(2,3),
+(3,4),
+(4,10),
+(5,5),
+(6,6),
+(7,7),
+(8,9),
+(9,8);
+USE NHS_Database;
+SELECT * FROM Patient;
+SHOW TABLES;
+SELECT * FROM Patient;
+SELECT * FROM Doctor;
+SELECT * FROM Clinic;
+SELECT * FROM Appointment;
+SELECT * FROM Prescription;
+SELECT * FROM Patient;
+USE NHS_Database;
+SELECT * FROM Patient;
+SHOW TABLES;
+SELECT * FROM Patient;
+SELECT * FROM Doctor;
+SELECT * FROM Clinic;
+SELECT * FROM Appointment;
+SELECT * FROM Medication;
+SELECT * FROM Prescription;
+SELECT COUNT(*) AS TotalPatients
+FROM Patient;
+SELECT
+    Patient.PatientName,
+    Doctor.DoctorName,
+    Appointment.AppointmentDate
+FROM Appointment
+JOIN Patient
+ON Appointment.PatientID = Patient.PatientID
+JOIN Doctor
+ON Appointment.DoctorID = Doctor.DoctorID;
+SELECT
+    DoctorName,
+    Specialty
+FROM Doctor;
+SELECT VERSION();
+CREATE USER 'doctor1'@'localhost'
+IDENTIFIED BY 'Doctor123!';
+DROP USER IF EXISTS 'doctor1'@'localhost';
+
+CREATE USER 'doctor1'@'localhost'
+IDENTIFIED BY 'Doctor123!';
+DROP DATABASE IF EXISTS NHS_Database;
+CREATE DATABASE NHS_Database;
+USE NHS_Database;
+DESCRIBE Patient;
+DESCRIBE Clinic;
