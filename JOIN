@@ -1,0 +1,10 @@
+SELECT
+    Patient.PatientName,
+    Doctor.DoctorName,
+    Appointment.AppointmentDate,
+    Appointment.AppointmentTime
+FROM Appointment
+JOIN Patient
+ON Appointment.PatientID = Patient.PatientID
+JOIN Doctor
+ON Appointment.DoctorID = Doctor.DoctorID;
